@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ñoe <3</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('album_ñoe.png'); /* Nombre de tu imagen */
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+            text-align: center;
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center; /* Centra el contenido verticalmente */
+            flex-direction: column; /* Apila los elementos verticalmente */
+            overflow: hidden; /* Evita barras de desplazamiento cuando los corazones caen */
+            transition: background-color 2s; /* Transición suave para el color de fondo */
+        }
+        .carta {
+            background-color: rgba(255, 255, 255, 0.8); /* Fondo semi-transparente para que el texto se lea bien */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            width: 100%;
+            margin-bottom: 20px; /* Espacio debajo de la carta */
+        }
+        h1 {
+            color: #ff4d4d;
+        }
+        p {
+            font-size: 18px;
+            color: #333;
+        }
+        .boton-corazon {
+            width: 100px;
+            height: 100px;
+            background-image: url('corazon.png'); /* Ruta a la imagen de corazón */
+            background-size: cover;
+            background-repeat: no-repeat;
+            border: none;
+            cursor: pointer;
+            position: relative;
+            top: 20px;
+            transition: transform 0.3s;
+            display: inline-block;
+            background-color: rgba(255, 255, 255, 0); /* Fondo transparente */
+        }
+
+        .boton-corazon:hover {
+            transform: scale(1.1);
+        }
+
+        .corazon {
+            position: absolute;
+            top: -50px;
+            left: 50%;
+            width: 50px;
+            height: 50px;
+            background-image: url('corazon.png'); /* Usa la misma imagen del corazón */
+            background-size: cover;
+            background-repeat: no-repeat;
+            animation: caer 6s forwards; /* Aumenta el tiempo de la animación */
+            transform: scale(1); /* Valor por defecto para la escala */
+        }
+
+        @keyframes caer {
+            0% {
+                transform: translateY(0) scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) scale(1.5); /* Aumenta el tamaño final */
+                opacity: 0;
+            }
+        }
+
+        .mensaje-te-quiero {
+            font-size: 4em;
+            color: #ff4d4d;
+            font-weight: bold;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <div class="carta">
+        <h1>Mi Ñoe ❤️</h1>
+        <p>
+            Amor,
+            Te amo muchísimo. Te declaro culpable de enamorarme cada vez más y más todos los días. 
+            Cada mimo, cada palabra, cada intención, cada esfuerzo que tienes conmigo. 
+            No tengo más palabras para expresar mi amor, realmente te adoro y te quiero mucho. 
+            Si logro ser la mitad de bueno de lo que tú eres para mí, seré muy afortunado. <3
+        </p>
+    </div>
+    <button class="boton-corazon" onclick="hacerLluviaDeCorazones()"></button>
+
+    <script>
+        let musicaFondo;  // Variable global para controlar la música
+
+        function hacerLluviaDeCorazones() {
+            // Reproducir sonido al hacer clic
+            const sonido = new Audio('click.mp3');  // Asegúrate de que la ruta sea correcta
+            sonido.play();
+
+            // Cambiar el fondo de color
+            document.body.style.backgroundColor = '#6b91b5';  // Color azul claro
+
+            // Cambiar el contenido de la carta a "Te quiero muchísimo mi Ñoe"
+            const carta = document.querySelector('.carta');
+            carta.innerHTML = '<h1 class="mensaje-te-quiero">Te quiero muchísimo mi Ñoe</h1>';
+
+            // Crear la lluvia de corazones
+            for (let i = 0; i < 5; i++) {  // 5 líneas de corazones
+                setTimeout(() => {
+                    crearLineaDeCorazones(i);
+                }, i * 100);  // Espaciado entre líneas para que caigan de forma escalonada
+            }
+
+            // Restaurar el color de fondo después de que los corazones desaparezcan
+            setTimeout(() => {
+                document.body.style.backgroundColor = '';  // Restablece el color original
+            }, 6000);  // El color se restablecerá después de 6 segundos, cuando los corazones desaparezcan
+
+            // Reproducir la música de fondo si no se está reproduciendo
+            if (!musicaFondo) {
+                musicaFondo = new Audio('c418.mp3');  // Asegúrate de que la ruta sea correcta
+                musicaFondo.loop = true;  // Repetir en bucle
+                musicaFondo.play();  // Reproducir música de fondo
+            }
+        }
+
+        function crearLineaDeCorazones(linea) {
+            const cantidadCorazones = 20; // 20 corazones por línea
+            for (let i = 0; i < cantidadCorazones; i++) {
+                crearCorazon(linea, i);
+            }
+        }
+
+        function crearCorazon(linea, indice) {
+            const corazon = document.createElement('div');
+            corazon.classList.add('corazon');
+
+            // Posicionamiento aleatorio tanto en horizontal como en vertical
+            corazon.style.left = (Math.random() * 100) + 'vw';  // Posición aleatoria horizontal (en vw)
+            // Para la posición vertical, cada línea tiene una posición de inicio aleatoria
+            corazon.style.top = Math.random() * -50 + (linea * 20) + 'px';  // Desplazamiento vertical aleatorio
+
+            // Escala aleatoria para cada corazón (entre 1.5 y 3)
+            const escala = 1.5 + Math.random() * 1.5;  // Esto asegura que los corazones tengan tamaños entre 1.5 y 3
+            corazon.style.transform = `scale(${escala})`;
+
+            // Rotación aleatoria para cada corazón
+            const rotacion = (Math.random() * 360) + 'deg';  // Rotación aleatoria entre 0 y 360 grados
+            corazon.style.transform += ` rotate(${rotacion})`;  // Añadir rotación a la transformación
+
+            // Añadir el corazón al body
+            document.body.appendChild(corazon);
+
+            // Eliminar el corazón después de que termine la animación
+            corazon.addEventListener('animationend', () => {
+                corazon.remove();
+            });
+        }
+    </script>
+</body>
+</html>
